@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "simpleradio:copper_wire"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "C C",
+    "RQR",
+    "III"
+  ],
+  "result": {
+    "item": "simpleradio:antenna_tuner"
+  },
+  "show_notification": true
+}

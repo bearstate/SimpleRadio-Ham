@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "T": {
+      "item": "simpleradio:transmitting_module"
+    },
+    "Z": {
+      "item": "simpleradio:receiving_module"
+    },
+    "S": {
+      "item": "simpleradio:speaker_module"
+    },
+    "M": {
+      "item": "simpleradio:hand_microphone"
+    }
+  },
+  "pattern": [
+    "IAI",
+    "TZS",
+    "IMI"
+  ],
+  "result": {
+    "item": "simpleradio:mobile_radio"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "mobile.enabled"
+    }
+  ]
+}

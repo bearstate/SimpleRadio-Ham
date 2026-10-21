@@ -1,6 +1,5 @@
 plugins {
     id 'multiloader-common'
-    id 'me.modmuss50.mod-publish-plugin'
 }
 
 sourceSets {
@@ -93,51 +92,3 @@ tasks.register("substituteResources", Copy) {
     duplicatesStrategy DuplicatesStrategy.EXCLUDE
 }
 
-publishMods {
-    additionalFiles.from(sourcesJar)
-    additionalFiles.from(javadocJar)
-
-    displayName = "[${project.name.toUpperCase()}] ${mod_name} ${libs.versions.minecraft.asProvider().get()}-${providers.gradleProperty("version").get()}"
-
-    changelog = file("${project.rootDir}/changelog.md").text
-    type = STABLE
-
-    curseforge {
-        projectId = curseforge_id
-        projectSlug = "simple-voice-radio"
-        accessToken = project.findProperty("curseforge_token")
-
-        minecraftVersionRange {
-            start = minecraft_min
-            end   = minecraft_max
-        }
-
-        requires(required.split(","))
-        optional(optional.split(","))
-
-        client = true
-        server = true
-    }
-
-    modrinth {
-        projectId = modrinth_id
-        accessToken = project.findProperty("modrinth_token")
-
-        requires(required.split(","))
-        optional(optional.split(","))
-
-        minecraftVersionRange {
-            start = minecraft_min
-            end   = minecraft_max
-        }
-    }
-
-//    some other time
-//    github {
-//        repository = "test/example"
-//        accessToken = providers.environmentVariable("GITHUB_TOKEN")
-//        commitish = "main"
-//    }
-
-    dryRun = debug_mode.toBoolean()
-}

@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": { "particle": "minecraft:block/stone_bricks", "side": "minecraft:block/stone_bricks", "end": "minecraft:block/stone_bricks", "wire": "simpleradio:block/wire_line" },
+  "elements": [
+    { "from": [0, 0, 0], "to": [16, 16, 16],
+      "faces": {
+        "down": { "texture": "#end", "cullface": "down" },
+        "up": { "texture": "#end", "cullface": "up" },
+        "north": { "texture": "#side", "cullface": "north" },
+        "south": { "texture": "#side", "cullface": "south" },
+        "east": { "texture": "#side", "cullface": "east" },
+        "west": { "texture": "#side", "cullface": "west" }
+      } },
+    { "from": [-0.01, -0.01, -0.01], "to": [16.01, 16.01, 16.01],
+      "faces": {
+"north": { "texture": "#wire", "cullface": "north" },
+"south": { "texture": "#wire", "cullface": "south" },
+"east": { "texture": "#wire", "cullface": "east" },
+"west": { "texture": "#wire", "cullface": "west" }
+      } }
+  ]
+}

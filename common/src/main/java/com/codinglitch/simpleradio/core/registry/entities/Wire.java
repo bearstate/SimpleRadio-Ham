@@ -45,6 +45,7 @@ public class Wire extends Entity implements Wiring {
     private static final EntityDataAccessor<String> TO_TYPE = SynchedEntityData.defineId(Wire.class, EntityDataSerializers.STRING);
 
     private int killTime = -1;
+    private static final int LOAD_GRACE_TICKS = 100;
 
     private int deathRowTime = -1;
     private float deathRowPosition = -1;
@@ -348,6 +349,10 @@ public class Wire extends Entity implements Wiring {
                 }
                 RadioRouter from = (RadioRouter) RadioManager.getInstance().getRouter(fromRef, fromType);
                 RadioRouter to = (RadioRouter) RadioManager.getInstance().getRouter(toRef, toType);
+
+                // right after loading, the blocks at the ends may not have registered their routers yet
+                // (their chunk loads or starts ticking a little later): give them a moment
+                if ((from == null || to == null) && this.tickCount < LOAD_GRACE_TICKS) return;
 
                 if (from == null) {
                     CommonSimpleRadio.debug("Ticking wire death via missing FROM");

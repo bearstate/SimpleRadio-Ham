@@ -1,3 +1,20 @@
+> ## Simple Radio: Ham Edition (unofficial fork)
+>
+> This branch, `1.20.1-ham`, is an **unofficial fork** of CodinGlitch's Simple Radio for Forge 1.20.1, extended for
+> amateur radio: band plan and licences, HF/VHF/UHF stations, masts, Yagis and coax with SWR and an antenna tuner,
+> 13.8 V power (Electrodynamics or Forge Energy), a coal generator and wired blocks, repeaters with links and Morse ID,
+> line-of-sight and ionospheric propagation, a scanner, fox hunting, APRS, SSTV and mobile radios.
+>
+> - It **replaces** Simple Radio (same mod id `simpleradio`): the two cannot be installed together.
+> - Not made or supported by CodinGlitch: please don't report this fork's bugs to the original project.
+> - The full manual is in Turkish in [`KULLANIM.md`](KULLANIM.md); in game, the Operator's Manual is in English and
+>   Turkish.
+> - Build with `./gradlew :forge:build`; the jar is `forge/build/libs/simpleradio-forge-1.20.1-4.5.7.9-ham.jar`.
+>   Forge only: the Fabric module is left out of this build.
+> - Licensed, like the original, under the GNU GPL 3.0. Changes by Jelada Studios.
+>
+> The original project's README follows.
+
 <div align="center" style="text-align:center;"><img style="width:50%;" src="https://github.com/user-attachments/assets/074c208f-b8d8-472a-97d7-bf026d5638f9"></div>
 <br><br>
 

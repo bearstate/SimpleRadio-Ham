@@ -1,0 +1,69 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "simpleradio:repeater",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "frequency",
+                  "target": "BlockEntityTag.frequency",
+                  "op": "replace"
+                },
+                {
+                  "source": "modulation",
+                  "target": "BlockEntityTag.modulation",
+                  "op": "replace"
+                },
+                {
+                  "source": "shift",
+                  "target": "BlockEntityTag.shift",
+                  "op": "replace"
+                },
+                {
+                  "source": "enabled",
+                  "target": "BlockEntityTag.enabled",
+                  "op": "replace"
+                },
+                {
+                  "source": "access_tone",
+                  "target": "BlockEntityTag.access_tone",
+                  "op": "replace"
+                },
+                {
+                  "source": "output_tone",
+                  "target": "BlockEntityTag.output_tone",
+                  "op": "replace"
+                },
+                {
+                  "source": "callsign",
+                  "target": "BlockEntityTag.callsign",
+                  "op": "replace"
+                },
+                {
+                  "source": "link",
+                  "target": "BlockEntityTag.link",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "simpleradio:blocks/repeater"
+}

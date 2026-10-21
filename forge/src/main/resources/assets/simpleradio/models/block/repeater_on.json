@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "simpleradio:block/repeater_top",
+    "front": "simpleradio:block/repeater_front_on",
+    "side": "simpleradio:block/repeater_side",
+    "particle": "simpleradio:block/repeater_side"
+  }
+}

@@ -24,6 +24,17 @@ public class SimpleRadioClientConfig extends LexiconData {
     @LexiconPage(comment = "These are the configurations for the walkie talkie item.")
     public WalkieTalkie walkie_talkie = new WalkieTalkie();
 
+    @LexiconPage(comment = "These are the configurations for on-screen displays.")
+    public Hud hud = new Hud();
+
+    public static class Hud extends LexiconPageData {
+        @LexiconEntry(comment = "Shows frequency, S-meter and battery next to the hotbar while a handheld radio is in hand. Defaults to true.")
+        public Boolean handheldHud = true;
+
+        @LexiconEntry(comment = "Shows the S-meter of a radio or receiver block while looking at it. Defaults to true.")
+        public Boolean blockSMeter = true;
+    }
+
     public static class Wire extends LexiconPageData {
         @LexiconEntry(comment = "This determines whether or not wire effects will be processed. Defaults to true.")
         public Boolean effect = true;

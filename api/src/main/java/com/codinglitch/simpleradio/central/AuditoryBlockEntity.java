@@ -61,6 +61,17 @@ public abstract class AuditoryBlockEntity extends BlockEntity implements Socket 
     }
 
     /**
+     * Looks the frequency up again by name. Between loading the block and activating it, an empty frequency
+     * can be dropped by the garbage collector; routers added to the dropped copy would never meet the
+     * routers of blocks that loaded later.
+     */
+    protected void refreshFrequency() {
+        if (this.frequency != null && this.level != null) {
+            this.frequency = SimpleRadioApi.getInstance(this.level.isClientSide).frequencies().getOrCreate(this.frequency.getFrequency(), this.frequency.getModulation());
+        }
+    }
+
+    /**
      * This is called whenever the block is initially activated (placed, on world load, chunk loaded, etc.)
      * Use this to create and register the associated routers for this block.
      */
@@ -125,6 +136,9 @@ public abstract class AuditoryBlockEntity extends BlockEntity implements Socket 
 
         if (tag.contains("reference")) {
             this.id = tag.getUUID("reference");
+        } else if (tag.hasUUID("uuid")) {
+            // blocks saved by older versions: wires find their ends by this id
+            this.id = tag.getUUID("uuid");
         } else if (hasLevel() && !level.isClientSide) {
             this.id = UUID.randomUUID();
         }

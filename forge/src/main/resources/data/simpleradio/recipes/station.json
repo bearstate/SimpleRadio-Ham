@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "W": {
+      "item": "simpleradio:listener_module"
+    },
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "Y": {
+      "item": "simpleradio:speaker_module"
+    },
+    "T": {
+      "item": "simpleradio:transmitting_module"
+    },
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "Z": {
+      "item": "simpleradio:receiving_module"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    "WAY",
+    "TBZ",
+    "CRQ"
+  ],
+  "result": {
+    "item": "simpleradio:station"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "station.enabled"
+    }
+  ]
+}

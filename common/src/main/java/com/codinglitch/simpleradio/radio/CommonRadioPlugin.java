@@ -4,10 +4,19 @@ import com.codinglitch.simpleradio.CommonSimpleRadio;
 import de.maxhenkel.voicechat.api.VoicechatApi;
 import de.maxhenkel.voicechat.api.VoicechatServerApi;
 import de.maxhenkel.voicechat.api.VolumeCategory;
+import de.maxhenkel.voicechat.api.Group;
+import de.maxhenkel.voicechat.api.VoicechatConnection;
+import de.maxhenkel.voicechat.api.events.CreateGroupEvent;
+import de.maxhenkel.voicechat.api.events.Event;
 import de.maxhenkel.voicechat.api.events.EventRegistration;
+import de.maxhenkel.voicechat.api.events.JoinGroupEvent;
 import de.maxhenkel.voicechat.api.events.MicrophonePacketEvent;
 import de.maxhenkel.voicechat.api.events.VoicechatServerStartedEvent;
 import org.jetbrains.annotations.Nullable;
+import com.codinglitch.simpleradio.SimpleRadioLibrary;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import org.joml.Math;
 import org.joml.Vector3f;
 
@@ -130,6 +139,34 @@ public class CommonRadioPlugin {
     public void registerEvents(EventRegistration registration) {
         registration.registerEvent(VoicechatServerStartedEvent.class, this::onServerStarted);
         registration.registerEvent(MicrophonePacketEvent.class, microphonePacketEvent -> executor.submit(() -> RadioManager.getInstance().onMicPacket(microphonePacketEvent)));
+        registration.registerEvent(CreateGroupEvent.class, event -> blockGroup(event, event.getConnection()));
+        registration.registerEvent(JoinGroupEvent.class, event -> blockGroup(event, event.getConnection()));
+    }
+
+    /**
+     * Voice chat groups let players talk over any distance, which bypasses the radios.
+     */
+    private void blockGroup(Event event, @Nullable VoicechatConnection connection) {
+        if (!SimpleRadioLibrary.SERVER_CONFIG.voice_chat.disableGroups) return;
+        event.cancel();
+
+        if (connection != null && connection.getPlayer().getPlayer() instanceof ServerPlayer player) {
+            player.getServer().execute(() -> player.displayClientMessage(
+                    Component.translatable("message.simpleradio.groups_disabled").withStyle(ChatFormatting.RED), true));
+        }
+    }
+
+    /**
+     * Removes every voice chat group (including persistent ones created by the server or other mods).
+     */
+    public static void removeAllGroups(Iterable<ServerPlayer> players) {
+        if (serverApi == null || !SimpleRadioLibrary.SERVER_CONFIG.voice_chat.disableGroups) return;
+
+        for (ServerPlayer player : players) {
+            VoicechatConnection connection = serverApi.getConnectionOf(player.getUUID());
+            if (connection != null && connection.isInGroup()) connection.setGroup(null);
+        }
+        for (Group group : List.copyOf(serverApi.getGroups())) serverApi.removeGroup(group.getId());
     }
 
     public void onServerStarted(VoicechatServerStartedEvent event) {

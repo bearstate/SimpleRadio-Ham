@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north,status=0": { "model": "simpleradio:block/charger_idle", "y": 0 },
+    "facing=north,status=1": { "model": "simpleradio:block/charger_charging", "y": 0 },
+    "facing=north,status=2": { "model": "simpleradio:block/charger_full", "y": 0 },
+    "facing=east,status=0": { "model": "simpleradio:block/charger_idle", "y": 90 },
+    "facing=east,status=1": { "model": "simpleradio:block/charger_charging", "y": 90 },
+    "facing=east,status=2": { "model": "simpleradio:block/charger_full", "y": 90 },
+    "facing=south,status=0": { "model": "simpleradio:block/charger_idle", "y": 180 },
+    "facing=south,status=1": { "model": "simpleradio:block/charger_charging", "y": 180 },
+    "facing=south,status=2": { "model": "simpleradio:block/charger_full", "y": 180 },
+    "facing=west,status=0": { "model": "simpleradio:block/charger_idle", "y": 270 },
+    "facing=west,status=1": { "model": "simpleradio:block/charger_charging", "y": 270 },
+    "facing=west,status=2": { "model": "simpleradio:block/charger_full", "y": 270 }
+  }
+}

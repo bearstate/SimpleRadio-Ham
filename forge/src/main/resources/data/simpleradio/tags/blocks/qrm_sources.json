@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "createaddition:electric_motor", "required": false },
+    { "id": "createaddition:alternator", "required": false },
+    { "id": "createaddition:tesla_coil", "required": false }
+  ]
+}

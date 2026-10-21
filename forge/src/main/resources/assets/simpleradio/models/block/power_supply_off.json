@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "simpleradio:block/power_supply_output",
+    "south": "simpleradio:block/power_supply_front_off",
+    "east": "simpleradio:block/power_supply_side",
+    "west": "simpleradio:block/power_supply_side",
+    "up": "simpleradio:block/power_supply_side",
+    "down": "simpleradio:block/power_supply_side",
+    "particle": "simpleradio:block/power_supply_side"
+  }
+}

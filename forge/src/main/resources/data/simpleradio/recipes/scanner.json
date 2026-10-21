@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "Z": {
+      "item": "simpleradio:receiving_module"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "Y": {
+      "item": "simpleradio:speaker_module"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    }
+  },
+  "pattern": [
+    "IAI",
+    "ZRY",
+    "ICI"
+  ],
+  "result": {
+    "item": "simpleradio:scanner"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "scanner.enabled"
+    }
+  ]
+}

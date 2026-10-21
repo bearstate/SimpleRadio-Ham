@@ -104,7 +104,14 @@ public class ClientRadioManager extends ClientSimpleRadioApi {
         return tag != null && tag.contains("using") && tag.getBoolean("using");
     }
 
+    /**
+     * Set while the player holds the station push-to-talk key next to a keyed station.
+     * Read from the voice chat thread.
+     */
+    public static volatile boolean stationPTT = false;
+
     public static boolean shouldEnablePTT() {
+        if (stationPTT) return true;
         if (!isUsingHandheld()) return false;
 
         ItemStack useItem = Minecraft.getInstance().player.getUseItem();

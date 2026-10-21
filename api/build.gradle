@@ -9,7 +9,6 @@ base {
     archivesName = "${mod_id}-${project.name}"
 }
 
-apply from: 'https://raw.githubusercontent.com/CodinGlitch/gradle-templates/main/repository-publishers/codinglitch.gradle'
 
 legacyForge {
     mcpVersion = libs.versions.minecraft.asProvider().get()

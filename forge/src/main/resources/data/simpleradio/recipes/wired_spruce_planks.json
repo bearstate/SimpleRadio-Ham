@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [ { "item": "minecraft:spruce_planks" }, { "item": "minecraft:copper_ingot" } ],
+  "result": { "item": "simpleradio:wired_spruce_planks", "count": 1 }
+}

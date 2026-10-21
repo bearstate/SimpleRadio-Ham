@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "IQI",
+    "CRC",
+    "III"
+  ],
+  "result": {
+    "item": "simpleradio:power_supply"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "power.psuEnabled"
+    }
+  ]
+}

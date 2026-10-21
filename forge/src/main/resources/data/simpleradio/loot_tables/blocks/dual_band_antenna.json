@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "simpleradio:dual_band_antenna"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "simpleradio:blocks/dual_band_antenna"
+}

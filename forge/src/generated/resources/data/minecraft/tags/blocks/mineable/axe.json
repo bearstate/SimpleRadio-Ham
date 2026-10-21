@@ -1,5 +1,8 @@
 {
   "values": [
-    "simpleradio:insulator"
+    "simpleradio:wired_spruce_planks",
+    "simpleradio:wired_stripped_spruce_log",
+    "simpleradio:insulator",
+    "simpleradio:cw_key"
   ]
 }

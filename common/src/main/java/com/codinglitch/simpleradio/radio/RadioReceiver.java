@@ -21,6 +21,21 @@ public class RadioReceiver extends RadioRouter implements Receiver {
 
     public FrequencingType frequencingType;
 
+    /** Scales the sensitivity, e.g. a catalyst's efficiency. */
+    public float receptionMultiplier = 1;
+
+    /** CTCSS tone squelch (Hz): on FM only transmissions carrying this tone open the receiver. 0 = carrier squelch. */
+    public float toneSquelch = 0;
+    /** Man-made noise (0-100) around this receiver, e.g. from running machines. */
+    public volatile float localNoise = 0;
+
+    /** Clarifier / RIT (Hz): fine tuning of the receive frequency, mostly for SSB. */
+    public int clarifierHz = 0;
+
+    /** Strength (dB above the edge of reception) of the last signal heard and when it was heard (server ticks). */
+    public volatile float lastSignalDb = Float.NaN;
+    public volatile int lastSignalTick = -1000;
+
     protected RadioReceiver(Frequency frequency, UUID id) {
         super(id);
         this.frequency(frequency);
@@ -53,7 +68,15 @@ public class RadioReceiver extends RadioRouter implements Receiver {
     }
     @Override
     public float getPower() {
-        return frequencingType.receptionPower + (antennaPower * frequencingType.antennaAptitude);
+        return (frequencingType.receptionPower + (antennaPower * frequencingType.antennaAptitude)) * receptionMultiplier;
+    }
+
+    /**
+     * Reception power towards a specific transmitting location; directional receivers override this.
+     * @param from the location of the transmitter
+     */
+    public float getPower(WorldlyPosition from) {
+        return getPower();
     }
     @Override
     public FrequencingType getFrequencingType() {
@@ -81,6 +104,19 @@ public class RadioReceiver extends RadioRouter implements Receiver {
         super.tick(tickCount);
     }
 
+    /**
+     * @return the S-meter reading of what this receiver hears now, or NaN when nothing was heard recently
+     */
+    public float currentSignalDb(int holdTicks) {
+        return currentTick() - lastSignalTick <= holdTicks ? lastSignalDb : Float.NaN;
+    }
+
+    private int currentTick() {
+        WorldlyPosition location = getLocation();
+        if (location != null && location.level != null && location.level.getServer() != null) return location.level.getServer().getTickCount();
+        return 0;
+    }
+
     @Nullable
     @Override
     public Frequency getFrequency() {
@@ -92,10 +128,25 @@ public class RadioReceiver extends RadioRouter implements Receiver {
         //CommonSimpleRadio.info("receiving at {}", source.transmissionPower);
 
         if (!this.active) return;
+        RadioMessage radioMessage = (RadioMessage) message;
+
+        // the S-meter shows every carrier that arrives, also ones a tone squelch keeps silent
+        if (message.getPower() > 0 && !radioMessage.endOfTransmission && !Float.isNaN(radioMessage.signalDb)) {
+            this.lastSignalDb = radioMessage.signalDb;
+            this.lastSignalTick = currentTick();
+        }
+
         if (acceptCriteria != null && !acceptCriteria.test(message)) return;
         if (message.getPower() <= 0) return;
 
-        this.compileActivity(message);
+        Frequency medium = radioMessage.getFrequencyMedium();
+        if (toneSquelch > 0 && medium != null && medium.getModulation() == Frequency.Modulation.FREQUENCY
+                && !Ctcss.matches(radioMessage.ctcss, toneSquelch)) return;
+
+        // tuning the receiver up makes the audio lower (and the other way round)
+        radioMessage.offsetHz -= clarifierHz;
+
+        if (!radioMessage.endOfTransmission) this.compileActivity(message);
 
         //super.accept(source);
         this.route(message);//, router -> !source.owner.equals(router.owner.getUUID()));

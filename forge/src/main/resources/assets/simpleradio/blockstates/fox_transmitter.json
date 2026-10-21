@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "transmitting=false": {
+      "model": "simpleradio:block/fox_transmitter"
+    },
+    "transmitting=true": {
+      "model": "simpleradio:block/fox_transmitter_on"
+    }
+  }
+}

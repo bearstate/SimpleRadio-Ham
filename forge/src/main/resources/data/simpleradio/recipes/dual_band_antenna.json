@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    }
+  },
+  "pattern": [
+    " Q ",
+    " A ",
+    "ICI"
+  ],
+  "result": {
+    "item": "simpleradio:dual_band_antenna"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "dual_band_antenna.enabled"
+    }
+  ]
+}

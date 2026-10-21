@@ -1,0 +1,49 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "simpleradio:scanner",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "start",
+                  "target": "BlockEntityTag.start",
+                  "op": "replace"
+                },
+                {
+                  "source": "end",
+                  "target": "BlockEntityTag.end",
+                  "op": "replace"
+                },
+                {
+                  "source": "step",
+                  "target": "BlockEntityTag.step",
+                  "op": "replace"
+                },
+                {
+                  "source": "modulation",
+                  "target": "BlockEntityTag.modulation",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "simpleradio:blocks/scanner"
+}

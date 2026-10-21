@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=north,pressed=false": {
+      "model": "simpleradio:block/desk_microphone",
+      "y": 0
+    },
+    "facing=north,pressed=true": {
+      "model": "simpleradio:block/desk_microphone_pressed",
+      "y": 0
+    },
+    "facing=east,pressed=false": {
+      "model": "simpleradio:block/desk_microphone",
+      "y": 90
+    },
+    "facing=east,pressed=true": {
+      "model": "simpleradio:block/desk_microphone_pressed",
+      "y": 90
+    },
+    "facing=south,pressed=false": {
+      "model": "simpleradio:block/desk_microphone",
+      "y": 180
+    },
+    "facing=south,pressed=true": {
+      "model": "simpleradio:block/desk_microphone_pressed",
+      "y": 180
+    },
+    "facing=west,pressed=false": {
+      "model": "simpleradio:block/desk_microphone",
+      "y": 270
+    },
+    "facing=west,pressed=true": {
+      "model": "simpleradio:block/desk_microphone_pressed",
+      "y": 270
+    }
+  }
+}

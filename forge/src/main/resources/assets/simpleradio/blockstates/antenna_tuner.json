@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "simpleradio:block/antenna_tuner",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "simpleradio:block/antenna_tuner",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "simpleradio:block/antenna_tuner",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "simpleradio:block/antenna_tuner",
+      "y": 270
+    }
+  }
+}

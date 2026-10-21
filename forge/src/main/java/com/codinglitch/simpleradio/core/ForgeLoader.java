@@ -83,6 +83,7 @@ public class ForgeLoader {
 
         event.register(ForgeRegistries.Keys.RECIPE_SERIALIZERS, helper -> {
             CraftingHelper.register(ItemsEnabledCondition.Serializer.INSTANCE);
+            CraftingHelper.register(com.codinglitch.simpleradio.ham.ConfigEnabledCondition.Serializer.INSTANCE);
         });
 
         CommonSimpleRadio.load();

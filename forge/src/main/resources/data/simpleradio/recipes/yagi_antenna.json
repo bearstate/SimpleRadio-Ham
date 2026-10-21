@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    }
+  },
+  "pattern": [
+    "I I",
+    "IAI",
+    "ICI"
+  ],
+  "result": {
+    "item": "simpleradio:yagi_antenna"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "yagi.enabled"
+    }
+  ]
+}

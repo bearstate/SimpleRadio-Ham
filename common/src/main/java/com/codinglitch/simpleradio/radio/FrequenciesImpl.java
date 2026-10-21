@@ -116,7 +116,11 @@ public class FrequenciesImpl implements Frequencies {
 
     public static int getFrequencyIndex(String frequency, Frequency.Modulation modulation) {
         int rawFrequency = Integer.parseInt(frequency.replaceAll("[.]", ""));
-        return modulation == Frequency.Modulation.AMPLITUDE ? -rawFrequency : rawFrequency;
+        return switch (modulation) {
+            case AMPLITUDE -> -rawFrequency;
+            case SINGLE_SIDEBAND -> rawFrequency + 1_000_000_000;
+            default -> rawFrequency;
+        };
     }
 
     @Override
@@ -135,10 +139,14 @@ public class FrequenciesImpl implements Frequencies {
         MAX_FREQUENCY = (int) java.lang.Math.pow(10, FREQUENCY_DIGITS);
         FREQUENCY_PATTERN = "^\\d{"+ SimpleRadioLibrary.SERVER_CONFIG.frequency.wholePlaces+"}.\\d{"+ SimpleRadioLibrary.SERVER_CONFIG.frequency.decimalPlaces+"}$";
 
+        String zeros = "0".repeat(SimpleRadioLibrary.SERVER_CONFIG.frequency.wholePlaces)+"."+"0".repeat(SimpleRadioLibrary.SERVER_CONFIG.frequency.decimalPlaces);
         if (SimpleRadioLibrary.SERVER_CONFIG.frequency.defaultFrequency.equals("auto-generate")) {
-            DEFAULT_FREQUENCY = "0".repeat(SimpleRadioLibrary.SERVER_CONFIG.frequency.wholePlaces)+"."+"0".repeat(SimpleRadioLibrary.SERVER_CONFIG.frequency.decimalPlaces);
+            // 145.500 MHz is the common VHF calling frequency
+            String calling = HamFrequency.format(145_500);
+            DEFAULT_FREQUENCY = calling != null ? calling : zeros;
         } else {
-            DEFAULT_FREQUENCY = SimpleRadioLibrary.SERVER_CONFIG.frequency.defaultFrequency;
+            String configured = HamFrequency.normalize(SimpleRadioLibrary.SERVER_CONFIG.frequency.defaultFrequency);
+            DEFAULT_FREQUENCY = configured != null ? configured : zeros;
         }
     }
 

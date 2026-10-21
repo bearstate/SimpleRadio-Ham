@@ -83,7 +83,13 @@ public abstract class CatalyzingBlockEntity extends AuditoryBlockEntity {
         super.loadTag(tag);
 
         if (tag.contains("catalyst")) {
-            this.catalyst = CatalystRegistry.get(ResourceLocation.tryParse(tag.getString("catalyst")));
+            ResourceLocation location = ResourceLocation.tryParse(tag.getString("catalyst"));
+            this.catalyst = location == null ? null : CatalystRegistry.get(location);
+
+            // older versions saved catalysts as simpleradio:catalyst/<block>, now they are data driven as <namespace>:<block>
+            if (this.catalyst == null && location != null && location.getPath().startsWith("catalyst/")) {
+                this.catalyst = CatalystRegistry.get(new ResourceLocation("minecraft", location.getPath().substring("catalyst/".length())));
+            }
         }
     }
 

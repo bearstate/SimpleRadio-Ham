@@ -6,7 +6,10 @@ import com.codinglitch.simpleradio.SimpleRadioApi;
 import com.codinglitch.simpleradio.central.*;
 import com.codinglitch.simpleradio.client.ClientRadioManager;
 import com.codinglitch.simpleradio.client.core.central.AnimationInstance;
+import com.codinglitch.simpleradio.SimpleRadioLibrary;
 import com.codinglitch.simpleradio.core.central.Animatable;
+import com.codinglitch.simpleradio.core.central.PowerBuffer;
+import com.codinglitch.simpleradio.core.central.Powered;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioBlockEntities;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioBlocks;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioSounds;
@@ -24,8 +27,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RadioBlockEntity extends AuditoryBlockEntity implements Receiving, Speaking, Animatable {
+public class RadioBlockEntity extends AuditoryBlockEntity implements Receiving, Speaking, Animatable, Powered {
     public int antennaPower = 0;
+
+    public final PowerBuffer power = new PowerBuffer(1000);
+
+    @Override
+    public PowerBuffer getPowerBuffer() {
+        return power;
+    }
 
     private final Map<Integer, AnimationInstance> animations = new HashMap<>();
     public float time = 0;
@@ -73,11 +83,13 @@ public class RadioBlockEntity extends AuditoryBlockEntity implements Receiving, 
     public void load(CompoundTag tag) {
         super.load(tag);
         loadTag(tag);
+        power.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
         saveTag(tag);
+        power.save(tag);
         super.saveAdditional(tag);
     }
 
@@ -97,7 +109,10 @@ public class RadioBlockEntity extends AuditoryBlockEntity implements Receiving, 
 
             blockEntity.time += 0.05f;
         } else {
-
+            boolean powered = blockEntity.power.consume(SimpleRadioLibrary.SERVER_CONFIG.power.radioUsage);
+            if (blockEntity.receiver != null) blockEntity.receiver.setActive(powered);
+            if (blockEntity.speaker != null) blockEntity.speaker.setActive(powered);
+            if (level.getGameTime() % 20 == 0) blockEntity.setChanged();
         }
     }
 
@@ -115,6 +130,7 @@ public class RadioBlockEntity extends AuditoryBlockEntity implements Receiving, 
     @Override
     public void activate() {
         CommonSimpleRadio.info("Activating radio with reference {}", id);
+        refreshFrequency();
         WorldlyPosition location = CompatCore.modifyPosition(WorldlyPosition.of(worldPosition, level, worldPosition));
 
         this.speaker = SimpleRadioBlocks.RADIO.getOrCreateSpeaker(location, id, this.getBlockState());

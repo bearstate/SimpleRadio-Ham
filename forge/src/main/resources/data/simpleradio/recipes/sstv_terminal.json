@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "M": {
+      "item": "minecraft:map"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "QMQ",
+    "ICI"
+  ],
+  "result": {
+    "item": "simpleradio:sstv_terminal"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "sstv.enabled"
+    }
+  ]
+}

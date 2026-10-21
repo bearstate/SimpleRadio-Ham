@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [ { "item": "minecraft:stone_bricks" }, { "item": "minecraft:copper_ingot" } ],
+  "result": { "item": "simpleradio:wired_stone_bricks", "count": 1 }
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "pole": "simpleradio:block/yagi_boom",
+    "clamp": "simpleradio:block/yagi_metal",
+    "particle": "simpleradio:block/yagi_metal"
+  },
+  "elements": [
+    {
+      "from": [7, 0, 7], "to": [9, 12, 9],
+      "faces": {
+        "north": { "uv": [7, 4, 9, 16], "texture": "#pole" },
+        "south": { "uv": [7, 4, 9, 16], "texture": "#pole" },
+        "east":  { "uv": [7, 4, 9, 16], "texture": "#pole" },
+        "west":  { "uv": [7, 4, 9, 16], "texture": "#pole" },
+        "down":  { "uv": [7, 7, 9, 9], "texture": "#pole", "cullface": "down" }
+      }
+    },
+    {
+      "from": [6, 10, 6], "to": [10, 12, 10],
+      "faces": {
+        "north": { "uv": [6, 4, 10, 6], "texture": "#clamp" },
+        "south": { "uv": [6, 4, 10, 6], "texture": "#clamp" },
+        "east":  { "uv": [6, 4, 10, 6], "texture": "#clamp" },
+        "west":  { "uv": [6, 4, 10, 6], "texture": "#clamp" },
+        "up":    { "uv": [6, 6, 10, 10], "texture": "#clamp" },
+        "down":  { "uv": [6, 6, 10, 10], "texture": "#clamp" }
+      }
+    }
+  ]
+}

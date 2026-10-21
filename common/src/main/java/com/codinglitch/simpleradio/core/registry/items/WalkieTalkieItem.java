@@ -6,6 +6,7 @@ import com.codinglitch.simpleradio.central.Frequency;
 import com.codinglitch.simpleradio.core.central.WorldTicking;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioFrequencing;
 import com.codinglitch.simpleradio.radio.*;
+import com.codinglitch.simpleradio.radio.BandPlan;
 import com.codinglitch.simpleradio.routers.Listener;
 import com.codinglitch.simpleradio.routers.Receiver;
 import com.codinglitch.simpleradio.routers.Speaker;
@@ -40,47 +41,53 @@ public class WalkieTalkieItem extends TransceiverItem implements WorldTicking {
         listener.setRange(SimpleRadioLibrary.SERVER_CONFIG.walkie_talkie.listeningRange);
         speaker.setCategory(CommonRadioPlugin.WALKIES_CATEGORY);
 
-        transmitter.frequencingType(SimpleRadioFrequencing.WALKIE_TALKIE);
         receiver.frequencingType(SimpleRadioFrequencing.WALKIE_TALKIE);
 
         listener.setLink(this.getClass());
         speaker.setLink(this.getClass());
         receiver.setLink(this.getClass());
-        transmitter.setLink(this.getClass());
+
+        if (transmitter != null) {
+            transmitter.frequencingType(SimpleRadioFrequencing.WALKIE_TALKIE);
+            transmitter.setLink(this.getClass());
+        }
     }
 
     @Override
-    public void begin(ItemStack stack, Entity entity) {
-        Level level = entity.level();
-
-        // Get the receiver and deactivate it (half-duplex)
-        CompoundTag tag = stack.getTag();
-        if (tag != null && tag.contains("reference") && tag.contains("frequency") && tag.contains("modulation")) {
-            Frequency frequency = SimpleRadioApi.getInstance(level.isClientSide).frequencies().get(tag.getString("frequency"), Frequency.modulationOf(tag.getString("modulation")));
-            Receiver receiver = frequency.getReceiver(tag.getUUID("reference"));
-            if (receiver != null) receiver.setActive(false);
-        }
-
-        super.begin(stack, entity);
+    public BandPlan.Equipment equipment() {
+        return BandPlan.Equipment.PMR;
     }
 
     @Override
-    public void end(ItemStack stack, Entity entity) {
-        Level level = entity.level();
+    public com.codinglitch.simpleradio.central.FrequencingType receiverType() {
+        return SimpleRadioFrequencing.WALKIE_TALKIE;
+    }
 
-        // Get the receiver and reactivate it (half-duplex)
-        CompoundTag tag = stack.getTag();
-        if (tag != null && tag.contains("reference") && tag.contains("frequency") && tag.contains("modulation")) {
-            Frequency frequency = SimpleRadioApi.getInstance(level.isClientSide).frequencies().get(tag.getString("frequency"), Frequency.modulationOf(tag.getString("modulation")));
-            Receiver receiver = frequency.getReceiver(tag.getUUID("reference"));
-            if (receiver != null) receiver.setActive(true);
+    /**
+     * PMR446 walkie talkies only tune to the 16 PMR channels; anything else is moved to channel 1.
+     */
+    private void enforcePmr(ItemStack stack, Level level) {
+        if (level.isClientSide || !SimpleRadioLibrary.SERVER_CONFIG.band_plan.pmrWalkies) return;
+        CompoundTag tag = stack.getOrCreateTag();
+        String frequency = tag.getString("frequency");
+        if (frequency.isEmpty()) return;
+
+        boolean onChannel = BandPlan.pmrChannelOf(frequency) > 0 && getShift(tag) == 0 && "FM".equals(tag.getString("modulation"));
+        if (!onChannel) {
+            applySettings(stack, level, BandPlan.pmrChannelFrequency(1), Frequency.Modulation.FREQUENCY, 0, isSwitchedOn(stack), getToneTx(tag), getToneRx(tag));
         }
+    }
 
-        super.end(stack, entity);
+    @Override
+    public void entityTick(ItemStack stack, Entity entity) {
+        enforcePmr(stack, entity.level());
+        super.entityTick(stack, entity);
     }
 
     @Override
     public String getDefaultFrequency() {
+        if (SimpleRadioLibrary.SERVER_CONFIG.band_plan.pmrWalkies) return BandPlan.pmrChannelFrequency(1 + RANDOM.nextInt(BandPlan.PMR_CHANNELS));
+
         StringBuilder frequency = new StringBuilder();
 
         for (int i = 0; i < SimpleRadioLibrary.SERVER_CONFIG.frequency.wholePlaces; i++) {
@@ -115,6 +122,7 @@ public class WalkieTalkieItem extends TransceiverItem implements WorldTicking {
 
                     myTag.putString("frequency", theirTag.getString("frequency"));
                     myTag.putString("modulation", theirTag.getString("modulation"));
+                    myTag.putInt(SHIFT, getShift(theirTag));
 
                     level.playSound(null, item, SoundEvents.ALLAY_ITEM_TAKEN, SoundSource.MASTER, 1, 1);
 

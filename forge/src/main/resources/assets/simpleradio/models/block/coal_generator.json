@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "front": "simpleradio:block/coal_generator_front",
+    "side": "simpleradio:block/coal_generator_side",
+    "top": "simpleradio:block/coal_generator_top",
+    "bottom": "simpleradio:block/coal_generator_bottom"
+  }
+}

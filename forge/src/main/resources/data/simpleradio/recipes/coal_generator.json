@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [ "III", "RFR", "ICI" ],
+  "key": { "I": { "item": "minecraft:iron_ingot" }, "R": { "item": "minecraft:redstone" },
+           "F": { "item": "minecraft:furnace" }, "C": { "item": "minecraft:copper_ingot" } },
+  "result": { "item": "simpleradio:coal_generator" }
+}

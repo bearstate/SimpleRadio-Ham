@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    },
+    "P": {
+      "item": "minecraft:dark_oak_slab"
+    }
+  },
+  "pattern": [
+    "BGC",
+    "PPP"
+  ],
+  "result": {
+    "item": "simpleradio:cw_key"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "cw_key.enabled"
+    }
+  ]
+}

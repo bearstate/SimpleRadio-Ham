@@ -7,6 +7,8 @@ import com.codinglitch.simpleradio.central.AuditoryBlockEntity;
 import com.codinglitch.simpleradio.central.Speaking;
 import com.codinglitch.simpleradio.central.WorldlyPosition;
 import com.codinglitch.simpleradio.client.ClientRadioManager;
+import com.codinglitch.simpleradio.core.central.PowerBuffer;
+import com.codinglitch.simpleradio.core.central.Powered;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioBlockEntities;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioBlocks;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioSounds;
@@ -17,7 +19,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SpeakerBlockEntity extends AuditoryBlockEntity implements Speaking {
+public class SpeakerBlockEntity extends AuditoryBlockEntity implements Speaking, Powered {
+
+    public final PowerBuffer power = new PowerBuffer(1000);
+
+    @Override
+    public PowerBuffer getPowerBuffer() {
+        return power;
+    }
 
     public SpeakerBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleRadioBlockEntities.SPEAKER, pos, state);
@@ -46,11 +55,13 @@ public class SpeakerBlockEntity extends AuditoryBlockEntity implements Speaking 
     public void load(CompoundTag tag) {
         super.load(tag);
         loadTag(tag);
+        power.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
         saveTag(tag);
+        power.save(tag);
         super.saveAdditional(tag);
     }
 
@@ -66,6 +77,11 @@ public class SpeakerBlockEntity extends AuditoryBlockEntity implements Speaking 
         }
 
         if (blockEntity.level == null) return;
+        if (!level.isClientSide) {
+            boolean powered = blockEntity.power.consume(SimpleRadioLibrary.SERVER_CONFIG.power.speakerUsage);
+            if (blockEntity.speaker != null) blockEntity.speaker.setActive(powered);
+            if (level.getGameTime() % 20 == 0) blockEntity.setChanged();
+        }
         if (blockEntity.speaker != null && blockEntity.speaker.getActivityTime() >= 0) {
             if (blockEntity.speaker.getActivityTime() % SimpleRadioLibrary.SERVER_CONFIG.speaker.redstonePolling == 0) {
                 level.updateNeighborsAt(pos, SimpleRadioBlocks.SPEAKER);

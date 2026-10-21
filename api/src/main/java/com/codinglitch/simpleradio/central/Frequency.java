@@ -12,12 +12,20 @@ import java.util.function.Predicate;
 public interface Frequency extends Medium {
     enum Modulation {
         FREQUENCY("FM"),
-        AMPLITUDE("AM");
+        AMPLITUDE("AM"),
+        SINGLE_SIDEBAND("SB");
 
         public final String shorthand;
 
         Modulation(String shorthand) {
             this.shorthand = shorthand;
+        }
+
+        /**
+         * Name shown to players (single sideband is written SSB, its stored shorthand is two letters like the others).
+         */
+        public String display() {
+            return this == SINGLE_SIDEBAND ? "SSB" : shorthand;
         }
     }
 

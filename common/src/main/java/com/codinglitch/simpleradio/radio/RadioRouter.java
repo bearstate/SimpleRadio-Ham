@@ -36,6 +36,8 @@ import java.util.function.Predicate;
  * Routes RadioSources to other routers.
  */
 public class RadioRouter implements Socket, Router {
+    /** Item tag keys holding the references of routers an item keeps alive. */
+    public static final String[] ITEM_REFERENCE_KEYS = {"reference", "reference_b", "reference_scan", "reference_aprs"};
 
     private Map<UUID, OpusDecoder> decoders;
     private Map<UUID, OpusEncoder> encoders;
@@ -67,6 +69,11 @@ public class RadioRouter implements Socket, Router {
     public int compiledSamples = 0;
 
     public Class<?> link;
+
+    // Where the antenna really is (a mast top, a cable connected antenna); null means the router's own location
+    public java.util.function.Supplier<Vector3f> antennaSupplier;
+    // The antenna is known to be outside (e.g. a mast), so buildings around the router do not weaken it
+    public boolean externalAntenna = false;
 
     public Quaternionf rotation = null;
     public Vec3 connectionOffset = Vec3.ZERO; // A given offset for the rendering of wires connected to it. Relative to rotation if given.
@@ -182,6 +189,30 @@ public class RadioRouter implements Socket, Router {
             return new WorldlyPosition((float) owner.getX(), (float) owner.getY(), (float) owner.getZ(), owner.level());
         }
         return null;
+    }
+
+    /**
+     * Position of the antenna for terrain and building losses. Handhelds are held at about head height.
+     */
+    public Vector3f antennaPosition() {
+        if (antennaSupplier != null) {
+            Vector3f antenna = antennaSupplier.get();
+            if (antenna != null) return antenna;
+        }
+
+        WorldlyPosition location = getLocation();
+        if (this.position == null && this.owner != null && location != null) {
+            return new Vector3f(location.x, location.y + (float) Math.min(1.4, owner.getBbHeight() * 0.8), location.z);
+        }
+        return location;
+    }
+
+    /**
+     * Extra loss (dB) of this router's antenna towards another position, e.g. a direction finding antenna that
+     * is not pointed at the transmitter.
+     */
+    public double directionalLossDb(WorldlyPosition other) {
+        return 0;
     }
 
     @Nullable
@@ -467,11 +498,10 @@ public class RadioRouter implements Socket, Router {
                 continue;
             }
 
-            radioSource = this.prepareSource(radioSource, router);
-
-            RadioMessage oldSource = radioSource;
-            if (i < routers.size()-1) radioSource = radioSource.copy();
-            router.accept(oldSource);
+            // Prepare a fresh copy for every destination so the travel losses towards one
+            // destination do not carry over to the next one on the same frequency.
+            RadioMessage outgoing = this.prepareSource(radioSource.copy(), router);
+            router.accept(outgoing);
         }
     }
 
@@ -551,9 +581,12 @@ public class RadioRouter implements Socket, Router {
 
                 CompoundTag tag = stack.getTag();
                 if (!tag.contains("reference")) return false;
-                if (!tag.getUUID("reference").equals(reference)) return false;
 
-                return true;
+                // a handheld's own routers, or its second receivers (dual watch, scan, APRS)
+                for (String key : ITEM_REFERENCE_KEYS) {
+                    if (tag.hasUUID(key) && tag.getUUID(key).equals(reference)) return true;
+                }
+                return false;
             });
 
             if (!isValid) {

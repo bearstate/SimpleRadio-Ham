@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "Z": {
+      "item": "simpleradio:receiving_module"
+    },
+    "C": {
+      "item": "minecraft:compass"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " Z ",
+    " C "
+  ],
+  "result": {
+    "item": "simpleradio:direction_finder"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "direction_finder.enabled"
+    }
+  ]
+}

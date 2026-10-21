@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "T": {
+      "item": "simpleradio:transmitting_module"
+    },
+    "Z": {
+      "item": "simpleradio:receiving_module"
+    },
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    },
+    "P": {
+      "item": "minecraft:comparator"
+    }
+  },
+  "pattern": [
+    " A ",
+    "TBZ",
+    "CPC"
+  ],
+  "result": {
+    "item": "simpleradio:repeater"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "repeater.enabled"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": { "item": "minecraft:black_dye" },
+    "N": { "item": "minecraft:iron_nugget" },
+    "C": { "item": "simpleradio:copper_wire" }
+  },
+  "pattern": [
+    "DND",
+    "CCC",
+    "DND"
+  ],
+  "result": { "item": "simpleradio:coax_cable", "count": 8 },
+  "show_notification": true
+}

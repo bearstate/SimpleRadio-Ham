@@ -1,0 +1,69 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "simpleradio:station",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "frequency",
+                  "target": "BlockEntityTag.frequency",
+                  "op": "replace"
+                },
+                {
+                  "source": "modulation",
+                  "target": "BlockEntityTag.modulation",
+                  "op": "replace"
+                },
+                {
+                  "source": "shift",
+                  "target": "BlockEntityTag.shift",
+                  "op": "replace"
+                },
+                {
+                  "source": "watts",
+                  "target": "BlockEntityTag.watts",
+                  "op": "replace"
+                },
+                {
+                  "source": "tone_tx",
+                  "target": "BlockEntityTag.tone_tx",
+                  "op": "replace"
+                },
+                {
+                  "source": "tone_rx",
+                  "target": "BlockEntityTag.tone_rx",
+                  "op": "replace"
+                },
+                {
+                  "source": "clarifier",
+                  "target": "BlockEntityTag.clarifier",
+                  "op": "replace"
+                },
+                {
+                  "source": "vox",
+                  "target": "BlockEntityTag.vox",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "simpleradio:blocks/station"
+}

@@ -1,0 +1,198 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "base": "simpleradio:block/desk_microphone_base_pressed",
+    "stem": "simpleradio:block/desk_microphone_stem",
+    "grille": "simpleradio:block/desk_microphone_grille",
+    "particle": "simpleradio:block/desk_microphone_base"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        2,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#base",
+          "uv": [
+            4,
+            14,
+            12,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#base",
+          "uv": [
+            4,
+            14,
+            12,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#base",
+          "uv": [
+            4,
+            14,
+            12,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#base",
+          "uv": [
+            4,
+            14,
+            12,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#base",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "down": {
+          "texture": "#base",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ],
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        2,
+        7
+      ],
+      "to": [
+        9,
+        9,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stem",
+          "uv": [
+            7,
+            7,
+            9,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#stem",
+          "uv": [
+            7,
+            7,
+            9,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#stem",
+          "uv": [
+            7,
+            7,
+            9,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#stem",
+          "uv": [
+            7,
+            7,
+            9,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        9,
+        5
+      ],
+      "to": [
+        10,
+        13,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#grille",
+          "uv": [
+            6,
+            3,
+            10,
+            7
+          ]
+        },
+        "south": {
+          "texture": "#grille",
+          "uv": [
+            6,
+            3,
+            10,
+            7
+          ]
+        },
+        "east": {
+          "texture": "#grille",
+          "uv": [
+            5,
+            3,
+            11,
+            7
+          ]
+        },
+        "west": {
+          "texture": "#grille",
+          "uv": [
+            5,
+            3,
+            11,
+            7
+          ]
+        },
+        "up": {
+          "texture": "#grille",
+          "uv": [
+            6,
+            5,
+            10,
+            11
+          ]
+        },
+        "down": {
+          "texture": "#stem",
+          "uv": [
+            6,
+            5,
+            10,
+            11
+          ]
+        }
+      }
+    }
+  ]
+}

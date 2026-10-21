@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "simpleradio:transceiver"
+    },
+    {
+      "item": "minecraft:compass"
+    },
+    {
+      "item": "minecraft:map"
+    }
+  ],
+  "result": {
+    "item": "simpleradio:aprs_radio"
+  },
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "aprs.enabled"
+    }
+  ]
+}

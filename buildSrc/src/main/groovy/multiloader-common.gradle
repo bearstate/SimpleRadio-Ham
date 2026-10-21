@@ -15,6 +15,10 @@ java {
     withJavadocJar()
 }
 
+// sources contain non-ASCII text; the Windows default code page would garble it
+tasks.withType(JavaCompile).configureEach { options.encoding = "UTF-8" }
+tasks.withType(Javadoc).configureEach { options.encoding = "UTF-8" }
+
 void exclusiveGroup(MavenArtifactRepository repo, String... groups) {
     repositories.exclusiveContent {
         forRepository { repo }
@@ -40,14 +44,6 @@ repositories {
     mavenCentral()
 
     maven { url "https://modmaven.dev" }
-
-    exclusiveGroup(maven {
-        url "https://maven.pkg.github.com/MrCrayfish/Maven"
-        credentials {
-            username = "CodinGlitch"
-            password = project.property("github_token")
-        }
-    }, "com.mrcrayfish")
 
     exclusiveRegex("https://maven.codinglitch.com/repository/releases", "com\\.codinglitch.*") // Lexiconfig, Vibrative Voice
 
@@ -115,7 +111,7 @@ dependencies {
     apiJava(project(path: ':api', configuration: 'apiJava'))
 
     api(libs.voicechat.api)
-    api(libs.lexiconfig.api)
+    compileOnly(libs.lexiconfig.api)
 
     compileOnly(libs.vibrativevoice.api)
     compileOnly(libs.computercraft.core)

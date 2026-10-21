@@ -3,6 +3,9 @@ package com.codinglitch.simpleradio.core.registry.blocks;
 import com.codinglitch.simpleradio.CommonSimpleRadio;
 import com.codinglitch.simpleradio.CompatCore;
 import com.codinglitch.simpleradio.SimpleRadioApi;
+import com.codinglitch.simpleradio.SimpleRadioLibrary;
+import com.codinglitch.simpleradio.core.central.PowerBuffer;
+import com.codinglitch.simpleradio.core.central.Powered;
 import com.codinglitch.simpleradio.central.Receiving;
 import com.codinglitch.simpleradio.central.WorldlyPosition;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioBlockEntities;
@@ -19,9 +22,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ReceiverBlockEntity extends CatalyzingBlockEntity implements Receiving {
+public class ReceiverBlockEntity extends CatalyzingBlockEntity implements Receiving, Powered {
     public boolean isDirty = true;
     public int antennaPower = 0;
+
+    public final PowerBuffer power = new PowerBuffer(1000);
+
+    @Override
+    public PowerBuffer getPowerBuffer() {
+        return power;
+    }
 
     public ReceiverBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleRadioBlockEntities.RECEIVER, pos, state);
@@ -63,6 +73,7 @@ public class ReceiverBlockEntity extends CatalyzingBlockEntity implements Receiv
     public void load(CompoundTag tag) {
         super.load(tag);
         loadTag(tag);
+        power.load(tag);
 
         if (tag.contains("antennaPower")) {
             this.antennaPower = tag.getInt("antennaPower");
@@ -72,6 +83,7 @@ public class ReceiverBlockEntity extends CatalyzingBlockEntity implements Receiv
     @Override
     public void saveAdditional(CompoundTag tag) {
         saveTag(tag);
+        power.save(tag);
         super.saveAdditional(tag);
     }
 
@@ -92,7 +104,18 @@ public class ReceiverBlockEntity extends CatalyzingBlockEntity implements Receiv
         }
         CatalyzingBlockEntity.tick(level, pos, blockState, blockEntity);
 
-        if (blockEntity.receiver != null) blockEntity.receiver.setActive(blockEntity.catalyst != null);
+        if (!level.isClientSide) {
+            boolean powered = blockEntity.power.consume(SimpleRadioLibrary.SERVER_CONFIG.power.receiverUsage);
+            if (blockEntity.receiver != null) blockEntity.receiver.setActive(blockEntity.catalyst != null && powered);
+            if (blockEntity.receiver instanceof RadioReceiver receiver) {
+                // the catalyst's efficiency scales the sensitivity, an antenna structure is outside the building
+                receiver.receptionMultiplier = blockEntity.catalyst != null ? blockEntity.catalyst.efficiency : 1;
+                receiver.externalAntenna = blockEntity.antennaPower > 0;
+            }
+            if (level.getGameTime() % 20 == 0) blockEntity.setChanged();
+        } else if (blockEntity.receiver != null) {
+            blockEntity.receiver.setActive(blockEntity.catalyst != null);
+        }
 
         if (!blockEntity.catalyzed) return;
 
@@ -119,6 +142,7 @@ public class ReceiverBlockEntity extends CatalyzingBlockEntity implements Receiv
     @Override
     public void activate() {
         CommonSimpleRadio.info("Activating receiver with reference {}", id);
+        refreshFrequency();
         WorldlyPosition location = CompatCore.modifyPosition(WorldlyPosition.of(worldPosition, level, worldPosition));
 
         this.receiver = SimpleRadioBlocks.RECEIVER.getOrCreateReceiver(location, frequency, id, this.getBlockState());

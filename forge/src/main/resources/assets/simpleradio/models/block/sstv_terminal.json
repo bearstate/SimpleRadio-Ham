@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "simpleradio:block/station_top",
+    "front": "simpleradio:block/sstv_terminal_front",
+    "side": "simpleradio:block/station_side",
+    "particle": "simpleradio:block/station_side"
+  }
+}

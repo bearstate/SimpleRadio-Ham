@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "simpleradio:antenna"
+    },
+    "O": {
+      "item": "minecraft:orange_dye"
+    },
+    "T": {
+      "item": "simpleradio:transmitting_module"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " A ",
+    "OTO",
+    " I "
+  ],
+  "result": {
+    "item": "simpleradio:fox_transmitter"
+  },
+  "show_notification": true,
+  "conditions": [
+    {
+      "type": "simpleradio:config_enabled",
+      "path": "fox.enabled"
+    }
+  ]
+}

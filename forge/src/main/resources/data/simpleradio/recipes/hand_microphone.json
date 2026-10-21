@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "item": "simpleradio:listener_module"
+    },
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "C": {
+      "item": "simpleradio:copper_wire"
+    }
+  },
+  "pattern": [
+    "L",
+    "B",
+    "C"
+  ],
+  "result": {
+    "item": "simpleradio:hand_microphone"
+  },
+  "show_notification": true
+}

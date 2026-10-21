@@ -3,6 +3,9 @@ package com.codinglitch.simpleradio.core.registry.blocks;
 import com.codinglitch.simpleradio.CommonSimpleRadio;
 import com.codinglitch.simpleradio.CompatCore;
 import com.codinglitch.simpleradio.SimpleRadioApi;
+import com.codinglitch.simpleradio.SimpleRadioLibrary;
+import com.codinglitch.simpleradio.core.central.PowerBuffer;
+import com.codinglitch.simpleradio.core.central.Powered;
 import com.codinglitch.simpleradio.central.Transmitting;
 import com.codinglitch.simpleradio.central.WorldlyPosition;
 import com.codinglitch.simpleradio.core.registry.SimpleRadioBlockEntities;
@@ -19,9 +22,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TransmitterBlockEntity extends CatalyzingBlockEntity implements Transmitting {
+public class TransmitterBlockEntity extends CatalyzingBlockEntity implements Transmitting, Powered {
     public boolean isDirty = true;
     public int antennaPower = 0;
+
+    public final PowerBuffer power = new PowerBuffer(2000);
+
+    @Override
+    public PowerBuffer getPowerBuffer() {
+        return power;
+    }
 
     public TransmitterBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleRadioBlockEntities.TRANSMITTER, pos, state);
@@ -62,6 +72,7 @@ public class TransmitterBlockEntity extends CatalyzingBlockEntity implements Tra
     public void load(CompoundTag tag) {
         super.load(tag);
         loadTag(tag);
+        power.load(tag);
 
         if (tag.contains("antennaPower")) {
             this.antennaPower = tag.getInt("antennaPower");
@@ -71,6 +82,7 @@ public class TransmitterBlockEntity extends CatalyzingBlockEntity implements Tra
     @Override
     public void saveAdditional(CompoundTag tag) {
         saveTag(tag);
+        power.save(tag);
         super.saveAdditional(tag);
     }
 
@@ -91,7 +103,18 @@ public class TransmitterBlockEntity extends CatalyzingBlockEntity implements Tra
         }
         CatalyzingBlockEntity.tick(level, pos, blockState, blockEntity);
 
-        if (blockEntity.transmitter != null) blockEntity.transmitter.setActive(blockEntity.catalyst != null);
+        if (!level.isClientSide) {
+            boolean powered = blockEntity.power.consume(SimpleRadioLibrary.SERVER_CONFIG.power.transmitterUsage);
+            if (blockEntity.transmitter != null) blockEntity.transmitter.setActive(blockEntity.catalyst != null && powered);
+            if (blockEntity.transmitter instanceof RadioTransmitter transmitter) {
+                // the catalyst's efficiency scales the output, an antenna structure is outside the building
+                transmitter.powerMultiplier = blockEntity.catalyst != null ? blockEntity.catalyst.efficiency : 1;
+                transmitter.externalAntenna = blockEntity.antennaPower > 0;
+            }
+            if (level.getGameTime() % 20 == 0) blockEntity.setChanged();
+        } else if (blockEntity.transmitter != null) {
+            blockEntity.transmitter.setActive(blockEntity.catalyst != null);
+        }
 
         if (!blockEntity.catalyzed) return;
 
@@ -118,6 +141,7 @@ public class TransmitterBlockEntity extends CatalyzingBlockEntity implements Tra
     @Override
     public void activate() {
         CommonSimpleRadio.info("Activating transmitter with reference {}", id);
+        refreshFrequency();
         WorldlyPosition location = CompatCore.modifyPosition(WorldlyPosition.of(worldPosition, level, worldPosition));
 
         this.transmitter = SimpleRadioBlocks.TRANSMITTER.getOrCreateTransmitter(location, frequency, id, this.getBlockState());

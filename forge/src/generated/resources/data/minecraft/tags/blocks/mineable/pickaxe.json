@@ -1,5 +1,7 @@
 {
   "values": [
+    "simpleradio:wired_stone_bricks",
+    "simpleradio:coal_generator",
     "simpleradio:antenna",
     "simpleradio:radio",
     "simpleradio:frequencer",
@@ -7,6 +9,12 @@
     "simpleradio:receiver",
     "simpleradio:transmitter",
     "simpleradio:speaker",
-    "simpleradio:microphone"
+    "simpleradio:microphone",
+    "simpleradio:station",
+    "simpleradio:repeater",
+    "simpleradio:yagi_antenna",
+    "simpleradio:charger",
+    "simpleradio:scanner",
+    "simpleradio:dual_band_antenna"
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "L": {
+      "item": "simpleradio:listener_module"
+    },
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    }
+  },
+  "pattern": [
+    "L",
+    "B",
+    "S"
+  ],
+  "result": {
+    "item": "simpleradio:desk_microphone"
+  },
+  "show_notification": true
+}
