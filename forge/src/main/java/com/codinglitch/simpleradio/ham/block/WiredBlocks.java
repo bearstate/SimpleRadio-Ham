@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 
 /**
  * Building blocks with a wire laid in them: a stripped spruce log, spruce planks, stone bricks, each the block it looks
- * like but for a thin cable along it -- a lookout's power brought up a leg and across a floor without a cable in sight
+ * like but for a thin cable along it: a lookout's power brought up a leg and across a floor without a cable in sight
  * but that line. They carry power from a generator to the radios at the run's far end (see {@link WireNetwork}).
  */
 public final class WiredBlocks {

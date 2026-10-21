@@ -1,4 +1,4 @@
-# Simple Radio – Genişletilmiş Sürüm (4.5.7.9-ham)
+# Simple Radio: Genişletilmiş Sürüm (4.5.7.9-ham)
 
 Bu sürüm, CodinGlitch'in **Simple Radio** (Simple Voice Chat eklentisi) modunun Forge 1.20.1 için
 düzenlenmiş halidir. Orijinal mod GPLv3 lisanslıdır; bu değiştirilmiş sürüm de GPLv3'tür.
@@ -31,9 +31,9 @@ ipuçları sunucunun kurallarını gösterir.
 * Geçince **TA3KQ** gibi bir çağrı işareti alırsın. APRS bunu gönderir (lisans yoksa oyuncu adını).
 * **Dinlemek her zaman serbest.** Yalnızca bant planı nerede yayın yapılabileceğini sınırlar.
 * Amatör telsizler (el telsizi, istasyon, araç telsizi, APRS) yalnızca amatör bantlarda yayın yapar:
-  160 m 1,810–2,000 · 80 m 3,500–3,800 · 40 m 7,000–7,200 · 30 m 10,100–10,150 · 20 m 14,000–14,350 ·
-  17 m 18,068–18,168 · 15 m 21,000–21,450 · 12 m 24,890–24,990 · 10 m 28,000–29,700 · 6 m 50–52 ·
-  2 m 144–146 · 70 cm 430–440 MHz.
+  160 m 1,810-2,000 · 80 m 3,500-3,800 · 40 m 7,000-7,200 · 30 m 10,100-10,150 · 20 m 14,000-14,350 ·
+  17 m 18,068-18,168 · 15 m 21,000-21,450 · 12 m 24,890-24,990 · 10 m 28,000-29,700 · 6 m 50-52 ·
+  2 m 144-146 · 70 cm 430-440 MHz.
 * **El Telsizi / Patates Telsiz = PMR446:** lisanssız, 446,00625 MHz'den 12,5 kHz arayla 16 kanal.
 * Komutlar: `/telsiz lisans` (herkes), `/telsiz yayilim` (herkes, HF koşulları),
   `/telsiz lisans ver|iptal <oyuncu>` ve `/telsiz cagri <oyuncu> <çağrı>` (operatör).
@@ -55,7 +55,7 @@ ipuçları sunucunun kurallarını gösterir.
 
 ## 3. Sabit İstasyon
 
-* HF / VHF / UHF, **1–100 W**, FM/AM/**SSB**. Sağ tık → panel: bant, frekans, mod, shift, güç, CTCSS,
+* HF / VHF / UHF, **1-100 W**, FM/AM/**SSB**. Sağ tık paneli açar: bant, frekans, mod, shift, güç, CTCSS,
   **RIT** (±990 Hz), **VOX**, Yagi yönü, S-metre, SWR, sıcaklık, güneş akısı / K indeksi / bant durumu,
   QRM.
 * **Konuşmak:**
@@ -63,8 +63,8 @@ ipuçları sunucunun kurallarını gösterir.
   * **Masa mikrofonu:** istasyonun 4 blok yakınına koy, ona bakarak kullan tuşunu basılı tut (6 bloğa kadar).
   * **El mikrofonu:** istasyona kullanarak bağla, sonra ~8 blok içinde kullan tuşunu basılı tut.
   * **VOX** açıksa istasyonun yanında konuşmak yayını açar.
-* **SSB:** FM'den 6 dB daha iyi geçer. Karşı taraf kaymışsa ses ince/kalın gelir → RIT'i çevir.
-* **S-metre:** 1 S birimi = 4 dB (S1–S9 yeşil, S9+10/+20/+30 kırmızı). İstasyon, röle ve tarayıcı
+* **SSB:** FM'den 6 dB daha iyi geçer. Karşı taraf kaymışsa ses ince ya da kalın gelir; RIT'i çevir.
+* **S-metre:** 1 S birimi = 4 dB (S1-S9 yeşil, S9+10/+20/+30 kırmızı). İstasyon, röle ve tarayıcı
   panellerinde, el telsizi göstergesinde ve **orijinal Radyo / Alıcı bloklarında** vardır: bu bloklara
   8 blok içinden bakınca nişangahın yanında frekans ve S-metre çıkar; blok çalışmıyorsa nedeni yazar
   (güç yok / katalizör yok). İstemci ayarı: `hud.blockSMeter`.
@@ -114,25 +114,25 @@ ipuçları sunucunun kurallarını gösterir.
 ## 6. Röle (Repeater)
 
 * Girişi (çıkış + shift) dinler, çıkıştan kendi gücüyle tekrar yayınlar. Örnek: çıkış 438,650,
-  shift -7,600 → el telsizleri RX 438,650, shift -7,6.
+  shift -7,600 ise el telsizleri RX 438,650, shift -7,6.
 * **Erişim tonu** (CTCSS) ve **çıkış tonu**, **kuyruk sesi** (BEEP / K / NONE).
 * **Zaman aşımı:** tek yayın 180 saniyede kesilir ("bonk").
 * **Mors kimliği:** panelde yazılan çağrı işaretini her 10 dakikalık kullanımda, bir yayının sonunda
   20 WPM mors ile gönderir.
-* **Bağlantı:** aynı bağlantı numarasına (1–9999) sahip röleler trafiği birbirine aktarır.
+* **Bağlantı:** aynı bağlantı numarasına (1-9999) sahip röleler trafiği birbirine aktarır.
 * Açıkken chunk'larını yüklü tutar (3×3). Güç kaynağını bu alanın içine kur.
 
 ## 7. Yayılım (propagation)
 
 * **VHF/UHF görüş hattıdır:** tepeler ve dağlar sinyali zayıflatır/keser (sırtı sıyıran az, dağın
-  arkasında kalan çok kaybeder). Radyo ufkunun ötesinde sinyal azalır → **yükseğe çık**.
+  arkasında kalan çok kaybeder). Radyo ufkunun ötesinde sinyal azalır, bu yüzden **yükseğe çık**.
 * **Binalar, çatılar, yeraltı ve mağaralar** sinyali zayıflatır; antenin üstündeki bloklar kayıp,
   açık gökyüzü avantajdır. İstasyon ve rölede bu kayıp antenin tepesine göre hesaplanır: direğin
   tepesi açıktaysa bina engel olmaz.
 * **HF:** yer dalgası (sınırlı mesafe) + gök dalgası (iyonosferden yansır, çok uzağa gider ama bir
   **atlama bölgesi** bırakır).
   * 80 m / 40 m geceleri, 15 m / 10 m gündüz ve güneş akısı yüksekken açılır.
-  * Güneş akısı 27 günlük döngüyle 70–200 arasında değişir; manyetik fırtına (K indeksi) yüksek
+  * Güneş akısı 27 günlük döngüyle 70-200 arasında değişir; manyetik fırtına (K indeksi) yüksek
     bantları kapatır; sporadik E bazen 6 m ve 10 m'yi açar. `/telsiz yayilim` günün durumunu gösterir.
   * Fırtınalarda HF'de parazit çatırtıları olur.
 * **FM yakalama:** aynı anda iki istasyon yayın yaparsa güçlü olan duyulur, yakın güçler karışır.
@@ -152,13 +152,13 @@ Açık ve düz arazide, engel yokken yaklaşık menziller (FM, aynı cihazla):
 
 ## 8. Tarayıcı
 
-* Başlangıç/bitiş frekansı, adım (5–100 kHz), FM/AM/SSB. Saniyede 200 kanal tarar, sinyalde durur,
+* Başlangıç/bitiş frekansı, adım (5-100 kHz), FM/AM/SSB. Saniyede 200 kanal tarar, sinyalde durur,
   S-metre gösterir. **Atla** dolu kanalı bir süre pas geçer; **< >** ile elle gezilir.
 
 ## 9. Tilki avı (ARDF)
 
 * **Tilki vericisi:** kimliğini morsla (MOE, MOI, MOS, MOH, MO5) + uzun tonla gönderir. Boş elle
-  kullan → tilki numarası (1–5); el telsiziyle kullan → telsizin frekansını alır (varsayılan 144,500).
+  kullan: tilki numarası (1-5); el telsiziyle kullan: telsizin frekansını alır (varsayılan 144,500).
   `fox.cycleSeconds` ayarlanırsa (ör. 60) tilkiler sırayla yayın yapar; 0 = sürekli.
 * **Yön bulucu:** baktığın yönden en iyi duyan alıcı (70° hüzme, 20 dB ön/arka). Kullan =
   zayıflatıcı (0/10/20/30 dB), eğil + kullan = frekans.
@@ -168,11 +168,11 @@ Açık ve düz arazide, engel yokken yaklaşık menziller (FM, aynı cihazla):
 * **APRS El Telsizi** (alıcı-verici + pusula + harita): normal telsizdir, ayrıca konumunu 144,800 MHz'den
   90 sn'de bir (hızlıyken 20 sn) gerçek 1200 baud AX.25 paketi olarak gönderir. Çağrı işareti
   (lisans yoksa oyuncu adı) -7 ekiyle gider.
-* Eğil + kullan → **APRS** düğmesi: son 30 dakikada duyulan istasyonların haritası, yayın aç/kapa, yorum.
+* Eğil + kullan, sonra **APRS** düğmesi: son 30 dakikada duyulan istasyonların haritası, yayın aç/kapa, yorum.
 
 ## 11. SSTV (resim gönderme)
 
-* **SSTV Terminali:** bir istasyonun 2 blok yakınına koy. TX yuvasına dolu harita → **Resmi gönder**
+* **SSTV Terminali:** bir istasyonun 2 blok yakınına koy. TX yuvasına dolu harita koyup **Resmi gönder**'e bas
   (gerçek Robot 36, ~37 sn). Karşı tarafta MAP yuvasında boş harita olmalı: resim RX yuvasına kilitli
   bir harita olarak basılır. Zayıf sinyal karlı resim verir; sinyal kesilirse gelen kısım basılır.
 
